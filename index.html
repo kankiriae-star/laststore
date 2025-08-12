@@ -9,21 +9,33 @@
   * {
     margin: 0; padding: 0; box-sizing: border-box;
   }
-  body {
+  html, body {
+    height: 100%;
+    overflow-x: hidden;
     background: radial-gradient(ellipse at center, #0a0a0a 0%, #111 80%);
     font-family: 'Orbitron', sans-serif;
     color: #00ffc8;
-    overflow-x: hidden;
+    position: relative;
+  }
+  canvas#particles {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
   }
   header {
+    position: relative;
     padding: 3rem 2rem 1rem;
     text-align: center;
     text-shadow: 0 0 15px #00ffc8;
+    z-index: 10;
   }
   header h1 {
     font-size: 4rem;
     letter-spacing: 0.2rem;
     text-transform: uppercase;
+    animation: flicker 3s infinite;
   }
   header p {
     margin-top: 0.5rem;
@@ -37,6 +49,8 @@
     display: grid;
     grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
     gap: 2rem;
+    position: relative;
+    z-index: 10;
   }
   .product {
     background: #111;
@@ -63,11 +77,23 @@
     font-size: 1rem;
     color: #00b388cc;
   }
+  .product a {
+    display: inline-block;
+    margin-top: 0.5rem;
+    color: #00ffc8;
+    text-decoration: underline;
+    font-weight: 600;
+  }
+  .product a:hover {
+    color: #00ffb3;
+  }
   footer {
     margin: 4rem 0 2rem;
     text-align: center;
     color: #007a61cc;
     font-size: 0.9rem;
+    position: relative;
+    z-index: 10;
   }
   /* Neon flicker animation */
   @keyframes flicker {
@@ -86,35 +112,108 @@
       opacity: 0.8;
     }
   }
-  header h1 {
-    animation: flicker 3s infinite;
-  }
 </style>
 </head>
 <body>
+<canvas id="particles"></canvas>
+
 <header>
   <h1>Kankiri Store</h1>
   <p>Exclusive digital products & more</p>
 </header>
 <main>
   <div class="product">
-    <img src="https://via.placeholder.com/280x180.png?text=Product+1" alt="Product 1" />
-    <h2>Digital Art Pack</h2>
-    <p>High-quality digital illustrations and designs for your projects.</p>
+    <img src="https://cdn.payhip.com/image/7111510/small_15d2325c4a40d254c68f7c2f267f90c5.jpeg" alt="Kitty - NFT Digital Collectible" />
+    <h2>Kitty - NFT Digital Collectible</h2>
+    <p>Unique digital art collectible NFT.</p>
+    <a href="https://payhip.com/b/QkoUS" target="_blank" rel="noopener">Buy on Payhip</a>
   </div>
   <div class="product">
-    <img src="https://via.placeholder.com/280x180.png?text=Product+2" alt="Product 2" />
-    <h2>Video Editing Presets</h2>
-    <p>Cool neon and glitch effects presets for your video editor.</p>
+    <img src="https://cdn.payhip.com/image/7065710/small_8c233ca79de6f12a2279d95e1eb1fdf4.jpeg" alt="Pretty Face - Digital Artwork" />
+    <h2>Pretty Face - Digital Artwork</h2>
+    <p>High-quality digital art.</p>
+    <a href="https://payhip.com/b/b6fI2" target="_blank" rel="noopener">Buy on Payhip</a>
   </div>
   <div class="product">
-    <img src="https://via.placeholder.com/280x180.png?text=Product+3" alt="Product 3" />
-    <h2>Custom Music Loops</h2>
-    <p>Royalty-free loops perfect for YouTube videos and shorts.</p>
+    <img src="https://cdn.payhip.com/image/7107327/small_481c8a12b6a484e9a8f0d00ca9f0b83a.jpeg" alt="Psychedelic Vibes - Art Pack" />
+    <h2>Psychedelic Vibes - Art Pack</h2>
+    <p>Colorful digital art collection.</p>
+    <a href="https://payhip.com/b/qtDsc" target="_blank" rel="noopener">Buy on Payhip</a>
   </div>
 </main>
 <footer>
   &copy; 2025 Kankiri Store. All rights reserved.
 </footer>
+
+<script>
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let width, height;
+  let particlesArray;
+
+  function init() {
+    resizeCanvas();
+    createParticles();
+    animate();
+  }
+
+  function resizeCanvas() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+  }
+
+  window.addEventListener('resize', () => {
+    resizeCanvas();
+  });
+
+  class Particle {
+    constructor() {
+      this.x = Math.random() * width;
+      this.y = Math.random() * height;
+      this.size = Math.random() * 2 + 0.5;
+      this.speedX = (Math.random() - 0.5) * 0.3;
+      this.speedY = (Math.random() - 0.5) * 0.3;
+      this.opacity = Math.random() * 0.8 + 0.2;
+    }
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+
+      // Wrap around edges
+      if(this.x > width) this.x = 0;
+      else if(this.x < 0) this.x = width;
+
+      if(this.y > height) this.y = 0;
+      else if(this.y < 0) this.y = height;
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+      ctx.fill();
+    }
+  }
+
+  function createParticles() {
+    particlesArray = [];
+    const numberOfParticles = Math.floor((width * height) / 8000);
+    for(let i = 0; i < numberOfParticles; i++) {
+      particlesArray.push(new Particle());
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+    particlesArray.forEach(p => {
+      p.update();
+      p.draw();
+    });
+    requestAnimationFrame(animate);
+  }
+
+  init();
+</script>
 </body>
 </html>
