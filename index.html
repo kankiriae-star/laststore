@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Kankiri</title>
+  <title>Kankiri Store</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
   <style>
     /* Reset */
@@ -113,6 +113,79 @@
       color: #fff;
     }
 
+    /* Products Section Styles */
+    #products {
+      padding: 40px 20px;
+      text-align: center;
+      background-color: #1a1a1a;
+      color: #ddd;
+    }
+
+    #products h2 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      color: #c0c0c0;
+      text-shadow: 0 0 8px #c0c0c0;
+    }
+
+    .product-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .product-item {
+      background-color: #121212;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 0 15px rgba(192, 192, 192, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .product-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 0 30px rgba(192, 192, 192, 0.2);
+    }
+
+    .product-item img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .product-item h3 {
+      font-size: 1.5rem;
+      color: #c0c0c0;
+      margin-bottom: 10px;
+    }
+
+    .product-item p {
+      font-size: 1.2rem;
+      color: #ccc;
+      margin-bottom: 15px;
+    }
+
+    .product-item .btn-primary {
+      background-color: #888888;
+      border: none;
+      padding: 10px 20px;
+      color: #121212;
+      font-weight: 700;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #c0c0c0;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .product-item .btn-primary:hover {
+      background-color: #666666;
+      box-shadow: 0 0 20px #c0c0c0;
+      color: #fff;
+    }
+
     footer {
       background-color: #1a1a1a;
       padding: 15px 40px;
@@ -132,6 +205,10 @@
         margin-left: 15px;
         font-size: 1rem;
       }
+
+      .product-list {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -148,9 +225,33 @@
 
   <main>
     <section id="home">
-      <h2>Kankiri</h2>
+      <h2>Welcome to Kankiri Store</h2>
       <p>Your ultimate destination for quality digital products. Explore our collection with ease and style.</p>
       <button class="btn-primary">Shop Now</button>
+    </section>
+
+    <section id="products">
+      <h2>Our Products</h2>
+      <div class="product-list">
+        <div class="product-item">
+          <img src="https://payhip.com/preview/3" alt="Kankiri Editing Pack" />
+          <h3>Kankiri Editing Pack</h3>
+          <p>$5.00</p>
+          <a href="https://payhip.com/b/3" class="btn-primary">Buy Now</a>
+        </div>
+        <div class="product-item">
+          <img src="https://payhip.com/preview/4" alt="Weak Hero - Project File" />
+          <h3>Weak Hero - Project File</h3>
+          <p>$2.00</p>
+          <a href="https://payhip.com/b/4" class="btn-primary">Buy Now</a>
+        </div>
+        <div class="product-item">
+          <img src="https://payhip.com/preview/5" alt="Rafe - Project File" />
+          <h3>Rafe - Project File</h3>
+          <p>$2.00</p>
+          <a href="https://payhip.com/b/5" class="btn-primary">Buy Now</a>
+        </div>
+      </div>
     </section>
   </main>
 
